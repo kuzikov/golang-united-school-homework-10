@@ -68,7 +68,7 @@ func dataHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Write([]byte(fmt.Sprintf("Hello, %s", buf)))
+	w.Write([]byte(fmt.Sprintf("I got message:\n%s", buf)))
 
 }
 
