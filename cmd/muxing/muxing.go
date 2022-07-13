@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -61,12 +62,12 @@ func internalServerErrorHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func dataHandler(w http.ResponseWriter, r *http.Request) {
-	buf := []byte{}
-	_, err := r.Body.Read(buf)
+	buf, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, "error reading param", http.StatusBadRequest)
 		return
 	}
+	defer r.Body.Close()
 
 	w.Write([]byte(fmt.Sprintf("I got message:\n%s", buf)))
 
